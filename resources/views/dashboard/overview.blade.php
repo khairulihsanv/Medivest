@@ -71,3 +71,37 @@
         </div>
     </div>
 </div>
+
+{{-- ── MEDICAL ARTICLES & PROMO CARDS ────────────────────── --}}
+<div class="mt-8">
+    <div class="flex items-center justify-between mb-4">
+        <h3 class="font-bold text-surface-900 text-lg">Informasi & Artikel Medis</h3>
+        <a href="#" class="text-sm font-semibold text-brand-600 hover:text-brand-700">Lihat Semua</a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <!-- Article Card 1 -->
+        <div class="bg-white rounded-2xl border border-surface-200/60 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="{{ asset('assets/img/promo-1.jpg') }}" alt="Promo Edukasi" class="w-full h-40 object-cover bg-surface-100">
+            <div class="p-4">
+                <h4 class="font-bold text-surface-900 mb-1">Pencegahan DBD Musim Hujan</h4>
+                <p class="text-xs text-surface-500 line-clamp-2">Langkah 3M Plus untuk mencegah perkembangbiakan nyamuk Aedes aegypti di lingkungan tempat tinggal Anda.</p>
+            </div>
+        </div>
+        <!-- Article Card 2 -->
+        <div class="bg-white rounded-2xl border border-surface-200/60 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="{{ asset('assets/img/promo-2.jpg') }}" alt="Promo Edukasi" class="w-full h-40 object-cover bg-surface-100">
+            <div class="p-4">
+                <h4 class="font-bold text-surface-900 mb-1">Jadwal Imunisasi Nasional</h4>
+                <p class="text-xs text-surface-500 line-clamp-2">Pahami pentingnya vaksinasi dini bagi balita untuk membentuk herd immunity melawan penyakit mematikan.</p>
+            </div>
+        </div>
+        <!-- Article Card 3 -->
+        <div class="bg-white rounded-2xl border border-surface-200/60 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="{{ asset('assets/img/promo-3.jpg') }}" alt="Promo Edukasi" class="w-full h-40 object-cover bg-surface-100">
+            <div class="p-4">
+                <h4 class="font-bold text-surface-900 mb-1">Manajemen Stok Obat Cerdas</h4>
+                <p class="text-xs text-surface-500 line-clamp-2">Pelajari cara SiMoSoBa memprediksi lonjakan kebutuhan obat berdasarkan tren cuaca dan laporan penyakit.</p>
+            </div>
+        </div>
+    </div>
+</div>

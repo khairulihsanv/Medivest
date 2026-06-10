@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\DB;
  */
 class Obat extends Model
 {
+    use SoftDeletes;
+
     // ─── KONFIGURASI TABEL ─────────────────────────────────────────────
 
     protected $table = 'obat';

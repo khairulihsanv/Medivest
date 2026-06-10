@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Model Imunisasi — Tabel 'imunisasi' di database db_kesehatan_terpadu
@@ -13,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Imunisasi extends Model
 {
+    use SoftDeletes;
+
     // ─── KONFIGURASI TABEL ─────────────────────────────────────────────
 
     protected $table = 'imunisasi';

@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\Obat;
+use App\Models\Imunisasi;
+use App\Models\PelaporanPenyakit;
+use App\Observers\SystemObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Obat::observe(SystemObserver::class);
+        Imunisasi::observe(SystemObserver::class);
+        PelaporanPenyakit::observe(SystemObserver::class);
     }
 }
