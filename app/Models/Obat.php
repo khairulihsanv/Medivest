@@ -1,11 +1,17 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\DB;
 
+class Obat extends Model
+{
+    use SoftDeletes;
+    protected $table = 'obat';
+    protected $primaryKey = 'id_obat';
+    public $timestamps = false; // Karena tabel lama tidak pakai created_at/updated_at
+    protected $fillable = ['nama_obat', 'jenis_obat', 'stok', 'harga_beli', 'tgl_kadaluarsa'];
+}
 /**
  * Model Obat — Tabel 'obat' di database db_kesehatan_terpadu
  *

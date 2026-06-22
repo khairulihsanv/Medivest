@@ -32,36 +32,36 @@ return [
 
     'connections' => [
 
-        'sqlite' => [
-            'driver' => 'sqlite',
-            'url' => env('DB_URL'),
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
-            'prefix' => '',
-            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
-            'busy_timeout' => null,
-            'journal_mode' => null,
-            'synchronous' => null,
-            'transaction_mode' => 'DEFERRED',
-        ],
-
-        'mysql' => [
+        // 1. KONEKSI UTAMA / PUSAT (Server A - Stok Obat & Users)
+        'mysql_pusat' => [
             'driver' => 'mysql',
-            'url' => env('DB_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'laravel'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', ''),
-            'unix_socket' => env('DB_SOCKET', ''),
-            'charset' => env('DB_CHARSET', 'utf8mb4'),
-            'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'url' => env('DB_URL_PUSAT'),
+            'host' => env('DB_HOST_PUSAT', '127.0.0.1'), // IP Laptop A saat demo
+            'port' => env('DB_PORT_PUSAT', '3306'),
+            'database' => env('DB_DATABASE_PUSAT', 'db_medivest_pusat'),
+            'username' => env('DB_USERNAME_PUSAT', 'root'),
+            'password' => env('DB_PASSWORD_PUSAT', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
-            'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_filter([
-                (PHP_VERSION_ID >= 80500 ? Mysql::ATTR_SSL_CA : PDO::MYSQL_ATTR_SSL_CA) => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
+        ],
+
+        // 2. KONEKSI KLINIK / CABANG (Server B - Pelaporan Penyakit & Imunisasi)
+        'mysql_klinik' => [
+            'driver' => 'mysql',
+            'url' => env('DB_URL_KLINIK'),
+            'host' => env('DB_HOST_KLINIK', '127.0.0.1'), // IP Laptop B saat demo
+            'port' => env('DB_PORT_KLINIK', '3306'),
+            'database' => env('DB_DATABASE_KLINIK', 'db_medivest_klinik'),
+            'username' => env('DB_USERNAME_KLINIK', 'root'), // Gunakan user remote yang dibuat tadi
+            'password' => env('DB_PASSWORD_KLINIK', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
         ],
 
         'mariadb' => [
