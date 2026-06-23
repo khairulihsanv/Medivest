@@ -1,39 +1,32 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Obat extends Model
-{
-    use SoftDeletes;
-    protected $table = 'obat';
-    protected $primaryKey = 'id_obat';
-    public $timestamps = false; // Karena tabel lama tidak pakai created_at/updated_at
-    protected $fillable = ['nama_obat', 'jenis_obat', 'stok', 'harga_beli', 'tgl_kadaluarsa'];
-}
 /**
- * Model Obat — Tabel 'obat' di database db_kesehatan_terpadu
+ * Model Obat — Tabel 'obat' di database db_medivest_pusat (Server A)
  *
- * Menggabungkan logika bisnis dari class Obat (base) dan DetailObat (child)
- * pada arsitektur PHP native ke dalam satu Eloquent Model.
- *
+ * Menggabungkan logika bisnis logistik dan arsitektur data terdistribusi.
  * Kolom: id_obat, nama_obat, jenis_obat, stok, harga_beli, tgl_kadaluarsa
  */
 class Obat extends Model
 {
     use SoftDeletes;
 
-    // ─── KONFIGURASI TABEL ─────────────────────────────────────────────
+    // ─── KONFIGURASI BASIS DATA TERDISTRIBUSI ───────────────────────────
+    // Mengunci model ini agar selalu terhubung ke Server Pusat (Laptop Kamu)
+    protected $connection = 'mysql_pusat'; 
 
+    // ─── KONFIGURASI TABEL LAMA (LEGACY SYSTEM INTEGRATION) ─────────────
     protected $table = 'obat';
     protected $primaryKey = 'id_obat';
     protected $keyType = 'int';
     public $incrementing = true;
-    public $timestamps = false;
+    public $timestamps = false; // Karena tabel bawaan awal tidak pakai created_at/updated_at
 
     // ─── MASS ASSIGNMENT PROTECTION ────────────────────────────────────
-
     protected $fillable = [
         'nama_obat',
         'jenis_obat',
@@ -43,18 +36,16 @@ class Obat extends Model
     ];
 
     // ─── ATTRIBUTE CASTING ─────────────────────────────────────────────
-
     protected $casts = [
         'stok'           => 'integer',
         'harga_beli'     => 'float',
         'tgl_kadaluarsa' => 'date',
     ];
 
-    // ─── BUSINESS LOGIC (migrated from DetailObat class) ───────────────
+    // ─── LOGIKA BISNIS (LOGISTIK & PREDIKSI TERINTEGRASI) ────────────────
 
     /**
      * Menghitung total stok setelah penerimaan barang masuk.
-     * (Polymorphism dari class Obat → DetailObat)
      */
     public static function hitungStokMasuk(int $stok_sekarang, int $jumlah_masuk): int
     {
@@ -66,12 +57,15 @@ class Obat extends Model
      */
     public function hitungSisaHariKadaluarsa(): int
     {
-        $selisih_detik = strtotime($this->tgl_kadaluarsa) - time();
+        if (!$this->tgl_kadaluarsa) {
+            return 0;
+        }
+        $selisih_detik = strtotime($this->tgl_kadaluarsa->format('Y-m-d')) - time();
         return (int) round($selisih_detik / 86400);
     }
 
     /**
-     * Tentukan label status stok berdasarkan jumlah.
+     * Tentukan label status stok berdasarkan jumlah kuantitas faskes.
      *
      * @return array{label:string, class:string, dot:string}
      */
@@ -103,7 +97,7 @@ class Obat extends Model
     }
 
     /**
-     * Generate kode prefix berdasarkan jenis obat.
+     * Accessor: Generate kode prefix berdasarkan jenis tipe obat.
      */
     public function getKodeAttribute(): string
     {
@@ -113,26 +107,20 @@ class Obat extends Model
 
     /**
      * Hitung Safety Stock dan Reorder Point (ROP) secara dinamis
-     * berdasarkan jumlah kasus penyakit aktif dari modul Pelaporan.
-     *
-     * Business Logic:
-     *   - Safety Stock naik 20% per kasus penyakit aktif
-     *   - ROP = (avg_demand_harian × lead_time) + safety_stock
+     * berdasarkan jumlah kasus penyakit aktif dari modul Pelaporan (Server B).
      */
     public static function hitungRekomendasiStokOtomatis(int $id_obat, string $nama_obat, int $jumlah_kasus_terkait): array
     {
-        // Konstanta logistik
         $stok_min_dasar    = 20;
         $lead_time         = 3;   // hari
         $avg_demand_harian = 5;   // unit/hari
 
-        // Safety stock naik 20% per tiap kasus aktif
+        // Safety stock otomatis naik 20% per tiap kasus aktif yang dilaporkan faskes cabang
         $safety_stock = (int) ceil($stok_min_dasar * (1 + ($jumlah_kasus_terkait * 0.2)));
 
-        // Reorder Point
+        // Perhitungan rumus Reorder Point (ROP)
         $rop = ($avg_demand_harian * $lead_time) + $safety_stock;
 
-        // Ambil stok aktual dari database
         $obat = self::find($id_obat);
         $stok_aktual = $obat ? (int) $obat->stok : 0;
 
