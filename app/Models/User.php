@@ -20,6 +20,11 @@ class User extends Authenticatable
     // ─── KONFIGURASI TABEL ─────────────────────────────────────────────
 
     /**
+     * Koneksi database ke Server Pusat (Server A).
+     */
+    protected $connection = 'mysql_pusat';
+
+    /**
      * Nama tabel yang digunakan oleh model ini.
      * Wajib didefinisikan karena nama tabel bukan 'users' standar Laravel.
      */

@@ -19,6 +19,7 @@ class PelaporanPenyakit extends Model
 
     // ─── KONFIGURASI TABEL ─────────────────────────────────────────────
 
+    protected $connection = 'mysql_klinik'; // Server B — Pelaporan & Imunisasi
     protected $table = 'pelaporan_penyakit';
     protected $primaryKey = 'id_laporan';
     protected $keyType = 'int';

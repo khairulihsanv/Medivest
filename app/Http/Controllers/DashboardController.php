@@ -39,8 +39,12 @@ class DashboardController extends Controller
         $data = [
             'tab' => $tab,
             'role' => $role,
-            'chartData' => $this->getChartData(),
         ];
+
+        // Chart hanya dimuat di tab overview
+        if ($tab === 'overview') {
+            $data['chartData'] = $this->getChartData();
+        }
 
         match ($tab) {
             'overview'  => $data = array_merge($data, $this->getOverviewData()),

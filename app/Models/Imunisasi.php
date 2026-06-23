@@ -18,6 +18,7 @@ class Imunisasi extends Model
 
     // ─── KONFIGURASI TABEL ─────────────────────────────────────────────
 
+    protected $connection = 'mysql_klinik'; // Server B — Pelaporan & Imunisasi
     protected $table = 'imunisasi';
     protected $primaryKey = 'id_imunisasi';
     protected $keyType = 'int';

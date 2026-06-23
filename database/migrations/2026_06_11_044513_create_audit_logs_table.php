@@ -7,24 +7,33 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
+     * Koneksi database yang digunakan oleh migrasi ini.
+     */
+    protected $connection = 'mysql_pusat';
+
+    /**
      * Run the migrations.
+     * Menggunakan proteksi hasTable agar migrasi di-skip
+     * jika tabel 'audit_logs' sudah ada di mysql_pusat.
      */
     public function up(): void
-{
-    Schema::create('audit_logs', function (Blueprint $table) {
-        $table->id();
-        $table->unsignedInteger('id_user');
-        $table->string('activity');
-        $table->string('target_table');
-        $table->timestamps();
-    });
-}
+    {
+        if (!Schema::connection('mysql_pusat')->hasTable('audit_logs')) {
+            Schema::connection('mysql_pusat')->create('audit_logs', function (Blueprint $table) {
+                $table->id();
+                $table->unsignedInteger('id_user');
+                $table->string('activity');
+                $table->string('target_table');
+                $table->timestamps();
+            });
+        }
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('audit_logs');
+        Schema::connection('mysql_pusat')->dropIfExists('audit_logs');
     }
 };

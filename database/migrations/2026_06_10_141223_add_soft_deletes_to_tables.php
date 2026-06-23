@@ -11,15 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('obat', function (Blueprint $table) {
-            $table->softDeletes();
-        });
-        Schema::table('imunisasi', function (Blueprint $table) {
-            $table->softDeletes();
-        });
-        Schema::table('pelaporan_penyakit', function (Blueprint $table) {
-            $table->softDeletes();
-        });
+        
     }
 
     /**
@@ -27,14 +19,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('obat', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
-        Schema::table('imunisasi', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
-        Schema::table('pelaporan_penyakit', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
+       
     }
 };

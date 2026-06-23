@@ -166,7 +166,8 @@
                 </div>
             @endif
 
-            {{-- ── ADVANCED ANALYTICS (CHART.JS) ──────────────────────── --}}
+            {{-- ── ADVANCED ANALYTICS (CHART.JS) — Hanya tampil di tab Overview ── --}}
+            @if ($tab === 'overview')
             <div class="mb-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Multi-Axis Line Chart -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-surface-200">
@@ -190,6 +191,7 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             {{-- ── TAB CONTENT LOADER ────────────────────────────── --}}
             <div class="tab-panel block">
@@ -225,7 +227,8 @@
         const banner = document.getElementById('statusBanner');
         if (banner) setTimeout(() => banner.remove(), 4000);
 
-        // -- Chart.js Initialization --
+        // -- Chart.js Initialization (hanya di tab overview) --
+        @if ($tab === 'overview')
         const chartData = @json($chartData);
 
         // 1. Multi-Axis Line Chart
@@ -306,5 +309,6 @@
                 maintainAspectRatio: false,
             }
         });
+        @endif
     </script>
 @endpush
