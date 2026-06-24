@@ -7,30 +7,34 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Model PelaporanPenyakit — Fragmen Server A (mysql_pusat)
+ * Model PelaporanPenyakitKlinik — Fragmen Server B (mysql_klinik)
  *
  * [ARSITEKTUR TERDISTRIBUSI — FRAGMENTASI HORIZONTAL]
- * Model ini hanya menyimpan dan membaca data pelaporan penyakit
- * untuk wilayah yang tergabung dalam GRUP SERVER A:
- *   → Manguharjo, Kartoharjo
+ * Model ini menyimpan dan membaca data pelaporan penyakit
+ * untuk wilayah yang tergabung dalam GRUP SERVER B:
+ *   → Taman (dan wilayah lain yang nanti ditambahkan ke grup ini)
  *
- * Data wilayah Taman dikelola oleh PelaporanPenyakitKlinik (mysql_klinik / Server B).
- * Routing wilayah ke model yang tepat dilakukan di PelaporanController@store.
+ * Nama tabel IDENTIK dengan PelaporanPenyakit ('pelaporan_penyakit'),
+ * namun berada di database yang berbeda (db_medivest_klinik / Server B).
+ * Inilah prinsip Fragmentasi Horizontal: schema sama, data dipecah berdasarkan baris.
  *
  * Kolom: id_laporan, nama_pasien, nik, jenis_penyakit, tgl_diagnosis,
  *        wilayah, tingkat_keparahan, catatan_klinis, deleted_at
  */
-class PelaporanPenyakit extends Model
+class PelaporanPenyakitKlinik extends Model
 {
     use SoftDeletes, HasPelaporanHelpers;
 
     // ─── KONFIGURASI TABEL ─────────────────────────────────────────────
 
     /**
-     * [ARSITEKTUR TERDISTRIBUSI] Koneksi Server A — Database Pusat.
-     * Wilayah yang disimpan di sini: Manguharjo, Kartoharjo.
+     * [ARSITEKTUR TERDISTRIBUSI] Koneksi Server B — Database Klinik.
+     * Wilayah yang disimpan di sini: Taman.
+     * Host dikonfigurasi via env('DB_HOST_KLINIK') di config/database.php —
+     * TIDAK ada IP yang di-hardcode di kode PHP.
+     * Saat Fase B: cukup ganti DB_HOST_KLINIK di .env ke IP asli PC teman.
      */
-    protected $connection = 'mysql_pusat';
+    protected $connection = 'mysql_klinik';
     protected $table = 'pelaporan_penyakit';
     protected $primaryKey = 'id_laporan';
     protected $keyType = 'int';
