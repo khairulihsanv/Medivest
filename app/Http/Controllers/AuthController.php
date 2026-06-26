@@ -151,4 +151,27 @@ class AuthController extends Controller
 
         return redirect('/');
     }
+    // Fungsi Khusus untuk Praktikum API
+    public function loginApi(\Illuminate\Http\Request $request)
+    {
+        $request->validate([
+            'username' => 'required', // Harus username, bukan email
+            'password' => 'required'
+        ]);
+
+        $user = \App\Models\User::where('username', $request->username)->first();
+
+        // Cek apakah user ada dan password cocok
+        if (!$user || !\Illuminate\Support\Facades\Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => 'Kredensial salah'], 401);
+        }
+
+        // Generate Token Sanctum
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type'   => 'Bearer',
+        ], 200);
+    }
 }

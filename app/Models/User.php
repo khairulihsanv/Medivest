@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens; // <--- 1. TAMBAHKAN BARIS INI DI SINI
 
 /**
  * Model User — Tabel 'users' di database db_kesehatan_terpadu
@@ -15,7 +16,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable; // <--- 2. SISIPKAN 'HasApiTokens,' DI SINI
 
     // ─── KONFIGURASI TABEL ─────────────────────────────────────────────
 
@@ -23,6 +24,8 @@ class User extends Authenticatable
      * Koneksi database ke Server Pusat (Server A).
      */
     protected $connection = 'mysql_pusat';
+
+    // ... (sisanya ke bawah biarkan sama persis seperti kodemu sebelumnya)
 
     /**
      * Nama tabel yang digunakan oleh model ini.
