@@ -103,11 +103,11 @@ class DashboardController extends Controller
     {
         $dataLaporan = PelaporanPenyakit::orderByDesc('id_laporan')->get();
 
-        // Indonesian Region API data (server-side fetch)
+        // Indonesian Region API data (server-side fetch) untuk Kabupaten Madiun (3519)
         $apiWilayah = [];
         try {
             $response = \Illuminate\Support\Facades\Http::timeout(3)
-                ->get('https://emsifa.github.io/api-wilayah-indonesia/api/districts/3577.json');
+                ->get('https://emsifa.github.io/api-wilayah-indonesia/api/districts/3519.json');
             if ($response->successful()) {
                 $apiWilayah = $response->json();
             }

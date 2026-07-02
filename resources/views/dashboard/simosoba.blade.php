@@ -9,7 +9,7 @@
 
 @section('content')
 
-<div x-data="{ slideOver: false, scannerActive: false }">
+<div x-data="simosoba">
 
     {{-- Page Header --}}
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
@@ -304,5 +304,50 @@
         // Will be handled by Alpine x-data default
     });
     @endif
+</script>
+
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script>
+    document.addEventListener('alpine:init', () => {
+        let html5QrcodeScanner = null;
+
+        Alpine.data('simosoba', () => ({
+            slideOver: false,
+            scannerActive: false,
+            init() {
+                this.$watch('scannerActive', value => {
+                    if (value) {
+                        this.startScanner();
+                    } else {
+                        this.stopScanner();
+                    }
+                });
+            },
+            startScanner() {
+                if (!html5QrcodeScanner) {
+                    html5QrcodeScanner = new Html5QrcodeScanner(
+                        "qr-reader", { fps: 10, qrbox: 250 }, false);
+                    
+                    html5QrcodeScanner.render((decodedText, decodedResult) => {
+                        // When scanned successfully
+                        document.getElementById('nama_obat_input').value = decodedText;
+                        this.scannerActive = false; // Hide scanner
+                        this.stopScanner();
+                        // Optional: play a success sound or visual feedback
+                    }, (errorMessage) => {
+                        // parse error, ignore it.
+                    });
+                }
+            },
+            stopScanner() {
+                if (html5QrcodeScanner) {
+                    html5QrcodeScanner.clear().catch(error => {
+                        console.error("Failed to clear html5QrcodeScanner. ", error);
+                    });
+                    html5QrcodeScanner = null;
+                }
+            }
+        }));
+    });
 </script>
 @endpush

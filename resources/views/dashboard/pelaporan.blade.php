@@ -179,14 +179,15 @@
                                         @foreach($apiWilayah as $kecamatan)
                                             @php
                                                 $nama = ucwords(strtolower($kecamatan['name']));
-                                                if ($nama === 'Mangu Harjo') $nama = 'Manguharjo';
                                             @endphp
                                             <option value="{{ $nama }}" {{ old('wilayah') == $nama ? 'selected' : '' }}>{{ $nama }}</option>
                                         @endforeach
+                                        <option value="Caruban" {{ old('wilayah') == 'Caruban' ? 'selected' : '' }}>Caruban</option>
                                     @else
-                                        <option value="Manguharjo" {{ old('wilayah') == 'Manguharjo' ? 'selected' : '' }}>Manguharjo</option>
-                                        <option value="Kartoharjo" {{ old('wilayah') == 'Kartoharjo' ? 'selected' : '' }}>Kartoharjo</option>
-                                        <option value="Taman" {{ old('wilayah') == 'Taman' ? 'selected' : '' }}>Taman</option>
+                                        <option value="Mejayan" {{ old('wilayah') == 'Mejayan' ? 'selected' : '' }}>Mejayan</option>
+                                        <option value="Caruban" {{ old('wilayah') == 'Caruban' ? 'selected' : '' }}>Caruban</option>
+                                        <option value="Wungu" {{ old('wilayah') == 'Wungu' ? 'selected' : '' }}>Wungu</option>
+                                        <option value="Dolopo" {{ old('wilayah') == 'Dolopo' ? 'selected' : '' }}>Dolopo</option>
                                     @endif
                                 </select>
                             </div>
