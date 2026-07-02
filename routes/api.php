@@ -10,7 +10,7 @@ Route::post('/login', [AuthController::class, 'loginApi']);
 
 // 2. Endpoint yang Diproteksi Sanctum (Wajib bawa Bearer Token di Postman)
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('obat', ObatApiController::class);
+    Route::apiResource('obat', ObatApiController::class)->names('api.obat');
 
 Route::get('/fix-password/{username}', function ($username) {
     $user = \App\Models\User::where('username', $username)->first();
