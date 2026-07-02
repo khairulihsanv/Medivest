@@ -1,107 +1,175 @@
+{{--
+    Dashboard Overview — Medivest VENTRILOC Design System
+    Bento-grid layout: Critical Medicine Stock, Disease Spikes, Immunization Schedule
+--}}
+
+@extends('layouts.app')
+
+@section('title', 'Dashboard Overview')
+
+@section('content')
+
+{{-- Page Header --}}
 <div class="mb-8">
-    <h2 class="text-2xl font-bold text-surface-900 tracking-tight">Dashboard Overview</h2>
-    <p class="text-surface-500 text-sm mt-1">Ringkasan status pemantauan dan pencegahan kesehatan terkini secara real-time.</p>
+    <h2 class="text-2xl font-display font-bold text-ink tracking-tight">Dashboard Overview</h2>
+    <p class="text-muted text-sm mt-1">Ringkasan status pemantauan dan pencegahan kesehatan terkini.</p>
 </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-5 mb-8">
-    
-    <div class="metric-card bg-white rounded-2xl p-5 border border-surface-200/60 shadow-sm relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-red-50 to-transparent rounded-bl-[60px]"></div>
-        <div class="relative">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center">
-                    <i data-lucide="alert-triangle" class="w-5 h-5 text-red-500"></i>
-                </div>
-                <span class="inline-flex items-center gap-1 text-xs font-semibold text-red-600 bg-red-50 px-2 py-1 rounded-full">
-                    <span class="w-1.5 h-1.5 bg-red-500 rounded-full pulse-dot"></span> Terpantau
-                </span>
+{{-- ─── METRIC SUMMARY CARDS (Bento Grid) ─────────────────────── --}}
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
+
+    {{-- Stok Kritis --}}
+    <div class="bg-white rounded-lg p-5 relative overflow-hidden">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-red-50 flex items-center justify-center">
+                <i data-lucide="alert-triangle" class="w-5 h-5 text-red-500"></i>
             </div>
-            <p class="text-sm font-medium text-surface-500 mb-1">Stok Kritis</p>
-            <p class="text-3xl font-extrabold text-surface-900 tracking-tight">{{ $stokKritis }}</p>
-            <p class="text-xs text-surface-400 mt-1">dari {{ $totalObat }} total item logistik</p>
+            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-signal bg-signal/10 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                <span class="w-1.5 h-1.5 bg-signal rounded-full pulse-dot"></span> Kritis
+            </span>
         </div>
+        <p class="text-sm font-semibold text-muted mb-0.5">Stok Kritis</p>
+        <p class="text-3xl font-display font-black text-ink tracking-tight">{{ $stokKritis }}</p>
+        <p class="text-xs text-muted/60 mt-1">dari {{ $totalObat }} total item logistik</p>
     </div>
 
-    <div class="metric-card bg-white rounded-2xl p-5 border border-surface-200/60 shadow-sm relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-amber-50 to-transparent rounded-bl-[60px]"></div>
-        <div class="relative">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-11 h-11 rounded-xl bg-amber-50 flex items-center justify-center">
-                    <i data-lucide="flame" class="w-5 h-5 text-amber-500"></i>
-                </div>
-                <span class="inline-flex items-center gap-1 text-xs font-semibold text-amber-600 bg-amber-50 px-2 py-1 rounded-full">
-                    <span class="w-1.5 h-1.5 bg-amber-500 rounded-full pulse-dot"></span> Waspada
-                </span>
+    {{-- Wabah Terlaporkan --}}
+    <div class="bg-white rounded-lg p-5 relative overflow-hidden">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center">
+                <i data-lucide="flame" class="w-5 h-5 text-amber-500"></i>
             </div>
-            <p class="text-sm font-medium text-surface-500 mb-1">Wabah Terlaporkan</p>
-            <p class="text-3xl font-extrabold text-surface-900 tracking-tight">{{ $totalKasus }}</p>
-            <p class="text-xs text-surface-400 mt-1">kasus tercatat aktif</p>
+            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                <span class="w-1.5 h-1.5 bg-amber-500 rounded-full pulse-dot"></span> Waspada
+            </span>
         </div>
+        <p class="text-sm font-semibold text-muted mb-0.5">Kasus Terlaporkan</p>
+        <p class="text-3xl font-display font-black text-ink tracking-tight">{{ $totalKasus }}</p>
+        <p class="text-xs text-muted/60 mt-1">kasus tercatat aktif</p>
     </div>
 
-    <div class="metric-card bg-white rounded-2xl p-5 border border-surface-200/60 shadow-sm relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-brand-50 to-transparent rounded-bl-[60px]"></div>
-        <div class="relative">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
-                    <i data-lucide="syringe" class="w-5 h-5 text-brand-500"></i>
-                </div>
-                <span class="inline-flex items-center gap-1 text-xs font-semibold text-brand-600 bg-brand-50 px-2 py-1 rounded-full">Antrean</span>
+    {{-- Belum Di-Reminder --}}
+    <div class="bg-white rounded-lg p-5 relative overflow-hidden">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+                <i data-lucide="baby" class="w-5 h-5 text-blue-500"></i>
             </div>
-            <p class="text-sm font-medium text-surface-500 mb-1">Belum Di-Reminder</p>
-            <p class="text-3xl font-extrabold text-surface-900 tracking-tight">{{ $totalAntrean }}</p>
-            <p class="text-xs text-surface-400 mt-1">pasien menunggu pengingat WA</p>
+            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                Antrean
+            </span>
         </div>
+        <p class="text-sm font-semibold text-muted mb-0.5">Belum Di-Reminder</p>
+        <p class="text-3xl font-display font-black text-ink tracking-tight">{{ $totalAntrean }}</p>
+        <p class="text-xs text-muted/60 mt-1">pasien menunggu pengingat WA</p>
     </div>
 
-    <div class="metric-card bg-white rounded-2xl p-5 border border-surface-200/60 shadow-sm relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-emerald-50 to-transparent rounded-bl-[60px]"></div>
-        <div class="relative">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center">
-                    <i data-lucide="database" class="w-5 h-5 text-emerald-500"></i>
-                </div>
-                <span class="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
-                    <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Online
-                </span>
+    {{-- Infrastruktur --}}
+    <div class="bg-white rounded-lg p-5 relative overflow-hidden">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center">
+                <i data-lucide="database" class="w-5 h-5 text-emerald-600"></i>
             </div>
-            <p class="text-sm font-medium text-surface-500 mb-1">Infrastruktur Server</p>
-            <p class="text-xl font-extrabold text-surface-900 tracking-tight">TiDB Cloud</p>
-            <p class="text-xs text-surface-400 mt-1">AWS Cluster ap-southeast-1</p>
+            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Online
+            </span>
         </div>
+        <p class="text-sm font-semibold text-muted mb-0.5">Infrastruktur</p>
+        <p class="text-xl font-display font-black text-ink tracking-tight">TiDB Cloud</p>
+        <p class="text-xs text-muted/60 mt-1">AWS ap-southeast-1</p>
     </div>
 </div>
 
-{{-- ── MEDICAL ARTICLES & PROMO CARDS ────────────────────── --}}
-<div class="mt-8">
-    <div class="flex items-center justify-between mb-4">
-        <h3 class="font-bold text-surface-900 text-lg">Informasi & Artikel Medis</h3>
-        <a href="#" class="text-sm font-semibold text-brand-600 hover:text-brand-700">Lihat Semua</a>
+{{-- ─── BENTO DATA GRID ───────────────────────────────────────── --}}
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
+
+    {{-- Top Penyakit --}}
+    <div class="bg-white rounded-lg p-6">
+        <h3 class="font-display font-bold text-ink mb-4 flex items-center gap-2 text-sm">
+            <i data-lucide="activity" class="w-4 h-4 text-red-500"></i>
+            Penyakit Tertinggi
+        </h3>
+        <div class="space-y-2.5">
+            @forelse ($topDiseases as $penyakit => $total)
+                <div class="flex justify-between items-center p-3 rounded-lg bg-mist">
+                    <span class="text-sm font-semibold text-ink">{{ $penyakit }}</span>
+                    <span class="text-xs font-bold text-signal bg-signal/10 px-2.5 py-1 rounded-full">{{ $total }} kasus</span>
+                </div>
+            @empty
+                <p class="text-sm text-muted/60 text-center py-4">Belum ada data</p>
+            @endforelse
+        </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <!-- Article Card 1 -->
-        <div class="bg-white rounded-2xl border border-surface-200/60 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <img src="{{ asset('assets/img/promo-1.jpg') }}" alt="Promo Edukasi" class="w-full h-40 object-cover bg-surface-100">
-            <div class="p-4">
-                <h4 class="font-bold text-surface-900 mb-1">Pencegahan DBD Musim Hujan</h4>
-                <p class="text-xs text-surface-500 line-clamp-2">Langkah 3M Plus untuk mencegah perkembangbiakan nyamuk Aedes aegypti di lingkungan tempat tinggal Anda.</p>
-            </div>
+
+    {{-- Top Wilayah --}}
+    <div class="bg-white rounded-lg p-6">
+        <h3 class="font-display font-bold text-ink mb-4 flex items-center gap-2 text-sm">
+            <i data-lucide="map-pin" class="w-4 h-4 text-blue-500"></i>
+            Wilayah Terdampak
+        </h3>
+        <div class="space-y-2.5">
+            @forelse ($topWilayah as $wilayah => $total)
+                <div class="flex justify-between items-center p-3 rounded-lg bg-mist">
+                    <span class="text-sm font-semibold text-ink">{{ $wilayah ?: 'Tidak Diketahui' }}</span>
+                    <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full">{{ $total }} laporan</span>
+                </div>
+            @empty
+                <p class="text-sm text-muted/60 text-center py-4">Belum ada data</p>
+            @endforelse
         </div>
-        <!-- Article Card 2 -->
-        <div class="bg-white rounded-2xl border border-surface-200/60 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <img src="{{ asset('assets/img/promo-2.jpg') }}" alt="Promo Edukasi" class="w-full h-40 object-cover bg-surface-100">
-            <div class="p-4">
-                <h4 class="font-bold text-surface-900 mb-1">Jadwal Imunisasi Nasional</h4>
-                <p class="text-xs text-surface-500 line-clamp-2">Pahami pentingnya vaksinasi dini bagi balita untuk membentuk herd immunity melawan penyakit mematikan.</p>
-            </div>
-        </div>
-        <!-- Article Card 3 -->
-        <div class="bg-white rounded-2xl border border-surface-200/60 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <img src="{{ asset('assets/img/promo-3.jpg') }}" alt="Promo Edukasi" class="w-full h-40 object-cover bg-surface-100">
-            <div class="p-4">
-                <h4 class="font-bold text-surface-900 mb-1">Manajemen Stok Obat Cerdas</h4>
-                <p class="text-xs text-surface-500 line-clamp-2">Pelajari cara SiMoSoBa memprediksi lonjakan kebutuhan obat berdasarkan tren cuaca dan laporan penyakit.</p>
-            </div>
+    </div>
+
+    {{-- Stok Kritis Items --}}
+    <div class="bg-white rounded-lg p-6">
+        <h3 class="font-display font-bold text-ink mb-4 flex items-center gap-2 text-sm">
+            <i data-lucide="package-minus" class="w-4 h-4 text-amber-500"></i>
+            Stok Paling Kritis
+        </h3>
+        <div class="space-y-2.5">
+            @forelse ($stokKritisItems as $obat)
+                <div class="flex justify-between items-center p-3 rounded-lg bg-mist">
+                    <div>
+                        <span class="text-sm font-semibold text-ink block truncate max-w-[140px]">{{ $obat->nama_obat }}</span>
+                        <span class="text-[10px] text-muted/60 font-medium">{{ $obat->jenis_obat }}</span>
+                    </div>
+                    <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full">{{ $obat->stok }} pcs</span>
+                </div>
+            @empty
+                <p class="text-sm text-muted/60 text-center py-4">Belum ada data</p>
+            @endforelse
         </div>
     </div>
 </div>
+
+{{-- ─── TODAY'S IMMUNIZATION SCHEDULE ─────────────────────────── --}}
+<div class="bg-white rounded-lg p-6">
+    <h3 class="font-display font-bold text-ink mb-4 flex items-center gap-2 text-sm">
+        <i data-lucide="calendar-check" class="w-4 h-4 text-signal"></i>
+        Jadwal Imunisasi Hari Ini
+        <span class="text-[10px] font-bold text-muted/50 bg-mist px-2.5 py-1 rounded-full ml-auto">{{ now()->format('d M Y') }}</span>
+    </h3>
+    @if($todaySchedule->count() > 0)
+        <div class="space-y-2.5">
+            @foreach($todaySchedule as $jadwal)
+                <div class="flex items-center justify-between p-3 rounded-lg bg-mist">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center">
+                            <i data-lucide="baby" class="w-4 h-4 text-muted/60"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-ink">{{ $jadwal->nama_anak }}</p>
+                            <p class="text-xs text-muted/60">{{ $jadwal->jenis_vaksin }} · Dosis ke-{{ $jadwal->dosis_ke }}</p>
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold text-muted/60">{{ $jadwal->usia_bulan }} bln</span>
+                </div>
+            @endforeach
+        </div>
+    @else
+        <div class="text-center py-8">
+            <i data-lucide="calendar-x" class="w-10 h-10 text-muted/20 mx-auto mb-2"></i>
+            <p class="text-sm text-muted/60">Tidak ada jadwal imunisasi hari ini.</p>
+        </div>
+    @endif
+</div>
+
+@endsection

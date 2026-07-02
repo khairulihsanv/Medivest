@@ -6,18 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Koneksi database: mysql_pusat (Server A - Users & Stok Obat)
-     */
-    protected $connection = 'mysql_pusat';
+
 
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        if (!Schema::connection('mysql_pusat')->hasTable('users')) {
-            Schema::connection('mysql_pusat')->create('users', function (Blueprint $table) {
+        if (!Schema::hasTable('users')) {
+            Schema::create('users', function (Blueprint $table) {
                 $table->id('id_user');
                 $table->string('username')->unique();
                 $table->string('password');
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('mysql_pusat')->dropIfExists('users');
+        Schema::dropIfExists('users');
     }
 };

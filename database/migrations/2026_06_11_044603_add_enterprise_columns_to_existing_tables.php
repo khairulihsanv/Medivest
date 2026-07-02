@@ -6,10 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Koneksi database yang digunakan oleh migrasi ini.
-     */
-    protected $connection = 'mysql_pusat';
+
 
     /**
      * Run the migrations.
@@ -18,19 +15,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        $pusat = Schema::connection('mysql_pusat');
-        $klinik = Schema::connection('mysql_klinik');
-
-        if ($pusat->hasTable('obat') && !$pusat->hasColumn('obat', 'deleted_at')) {
-            $pusat->table('obat', function (Blueprint $table) { $table->softDeletes(); });
+        if (Schema::hasTable('obat') && !Schema::hasColumn('obat', 'deleted_at')) {
+            Schema::table('obat', function (Blueprint $table) { $table->softDeletes(); });
         }
 
-        if ($klinik->hasTable('imunisasi') && !$klinik->hasColumn('imunisasi', 'deleted_at')) {
-            $klinik->table('imunisasi', function (Blueprint $table) { $table->softDeletes(); });
+        if (Schema::hasTable('imunisasi') && !Schema::hasColumn('imunisasi', 'deleted_at')) {
+            Schema::table('imunisasi', function (Blueprint $table) { $table->softDeletes(); });
         }
 
-        if ($klinik->hasTable('pelaporan_penyakit') && !$klinik->hasColumn('pelaporan_penyakit', 'deleted_at')) {
-            $klinik->table('pelaporan_penyakit', function (Blueprint $table) { $table->softDeletes(); });
+        if (Schema::hasTable('pelaporan_penyakit') && !Schema::hasColumn('pelaporan_penyakit', 'deleted_at')) {
+            Schema::table('pelaporan_penyakit', function (Blueprint $table) { $table->softDeletes(); });
         }
     }
 
@@ -39,19 +33,16 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $pusat = Schema::connection('mysql_pusat');
-        $klinik = Schema::connection('mysql_klinik');
-
-        if ($pusat->hasColumn('obat', 'deleted_at')) {
-            $pusat->table('obat', function (Blueprint $table) { $table->dropSoftDeletes(); });
+        if (Schema::hasColumn('obat', 'deleted_at')) {
+            Schema::table('obat', function (Blueprint $table) { $table->dropSoftDeletes(); });
         }
 
-        if ($klinik->hasColumn('imunisasi', 'deleted_at')) {
-            $klinik->table('imunisasi', function (Blueprint $table) { $table->dropSoftDeletes(); });
+        if (Schema::hasColumn('imunisasi', 'deleted_at')) {
+            Schema::table('imunisasi', function (Blueprint $table) { $table->dropSoftDeletes(); });
         }
 
-        if ($klinik->hasColumn('pelaporan_penyakit', 'deleted_at')) {
-            $klinik->table('pelaporan_penyakit', function (Blueprint $table) { $table->dropSoftDeletes(); });
+        if (Schema::hasColumn('pelaporan_penyakit', 'deleted_at')) {
+            Schema::table('pelaporan_penyakit', function (Blueprint $table) { $table->dropSoftDeletes(); });
         }
     }
 };

@@ -6,18 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Koneksi database: mysql_klinik (Server B - Pelaporan Penyakit & Imunisasi)
-     */
-    protected $connection = 'mysql_klinik';
+
 
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        if (!Schema::connection('mysql_klinik')->hasTable('pelaporan_penyakit')) {
-            Schema::connection('mysql_klinik')->create('pelaporan_penyakit', function (Blueprint $table) {
+        if (!Schema::hasTable('pelaporan_penyakit')) {
+            Schema::create('pelaporan_penyakit', function (Blueprint $table) {
                 $table->id('id_laporan');
                 $table->string('nama_pasien');
                 $table->string('nik');
@@ -36,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('mysql_klinik')->dropIfExists('pelaporan_penyakit');
+        Schema::dropIfExists('pelaporan_penyakit');
     }
 };

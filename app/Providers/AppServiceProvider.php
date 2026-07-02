@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\Obat;
 use App\Models\Imunisasi;
 use App\Models\PelaporanPenyakit;
-use App\Models\PelaporanPenyakitKlinik;
 use App\Observers\SystemObserver;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,9 +30,6 @@ class AppServiceProvider extends ServiceProvider
         Obat::observe(SystemObserver::class);
         Imunisasi::observe(SystemObserver::class);
         PelaporanPenyakit::observe(SystemObserver::class);
-
-        // [ARSITEKTUR TERDISTRIBUSI] Observer untuk fragmen Server B
-        PelaporanPenyakitKlinik::observe(SystemObserver::class);
     }
 }
 

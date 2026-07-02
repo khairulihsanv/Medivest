@@ -1,44 +1,34 @@
 {{-- 
-    Register Page — Medivest Health Logistics & Monitoring System
-
-    Form registrasi Tim Medis baru dengan Tailwind CSS.
-    Mengirim POST request ke /register yang ditangani oleh AuthController@register.
-    
-    Dimigrasi dari: /Medivest/register.php (native PHP)
+    Register Page — Medivest VENTRILOC Design System
+    Clean white card on #efefef Mist canvas with role selector
 --}}
 
 @extends('layouts.app')
 
-@section('title', 'Registrasi Tim Medis Baru')
+@section('title', 'Registrasi Akun Baru')
 
 @section('content')
 
-<div class="bg-slate-900 flex items-center justify-center min-h-screen p-4 w-full">
+<div class="bg-mist flex items-center justify-center min-h-screen p-4 w-full">
 
-    {{-- ─── DECORATIVE BACKGROUND ELEMENTS ──────────────────────────── --}}
-    <div class="fixed inset-0 overflow-hidden pointer-events-none">
-        <div class="absolute -top-40 -left-40 w-80 h-80 bg-emerald-600/10 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-40 -right-40 w-80 h-80 bg-teal-600/10 rounded-full blur-3xl"></div>
-    </div>
+    {{-- Register Card --}}
+    <div class="w-full max-w-md relative z-10">
+        <div class="bg-white rounded-lg p-10 space-y-7">
 
-    {{-- ─── REGISTER CARD ───────────────────────────────────────────── --}}
-    <div class="w-full max-w-md relative fade-in">
-        <div class="bg-white rounded-2xl shadow-2xl shadow-black/20 p-8 space-y-6 border border-slate-100">
-
-            {{-- ── Brand Header ──────────────────────────────────────── --}}
+            {{-- Brand Header --}}
             <div class="text-center space-y-2">
-                <div class="w-14 h-14 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl flex items-center justify-center text-white font-black text-2xl mx-auto shadow-lg shadow-emerald-500/30">
+                <div class="w-14 h-14 bg-ink rounded-lg flex items-center justify-center text-white font-display font-black text-2xl mx-auto">
                     M
                 </div>
-                <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Registrasi Tim Medis Baru</h1>
-                <p class="text-sm text-slate-500">Buat akun kredensial internal klaster kesehatan.</p>
+                <h1 class="text-2xl font-display font-bold text-ink tracking-tight">Registrasi Akun Baru</h1>
+                <p class="text-sm text-muted">Buat kredensial internal untuk klaster kesehatan.</p>
             </div>
 
-            {{-- ── Validation Error Messages ─────────────────────────── --}}
+            {{-- Validation Errors --}}
             @if ($errors->any())
-                <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-xs font-semibold fade-in">
+                <div class="bg-red-50 text-red-700 px-4 py-3 rounded-lg text-xs font-semibold">
                     <div class="flex items-center gap-2 mb-1">
-                        <span>⚠️</span>
+                        <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
                         <span>Terdapat kesalahan pada form:</span>
                     </div>
                     <ul class="list-disc list-inside space-y-0.5 ml-5">
@@ -49,20 +39,13 @@
                 </div>
             @endif
 
-            {{-- ── Success Message ───────────────────────────────────── --}}
-            @if (session('success'))
-                <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-xl text-xs font-semibold text-center fade-in">
-                    🎉 {{ session('success') }}
-                </div>
-            @endif
-
-            {{-- ── Register Form ─────────────────────────────────────── --}}
+            {{-- Register Form --}}
             <form method="POST" action="{{ url('/register') }}" class="space-y-4" id="registerForm">
-                @csrf {{-- Token CSRF wajib untuk setiap form POST di Laravel --}}
+                @csrf
 
-                {{-- Input: Nama Lengkap & Gelar --}}
-                <div>
-                    <label for="nama_lengkap" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                {{-- Nama Lengkap --}}
+                <div class="space-y-1.5">
+                    <label for="nama_lengkap" class="block text-xs font-bold text-muted uppercase tracking-wider">
                         Nama Lengkap & Gelar
                     </label>
                     <input
@@ -73,19 +56,15 @@
                         required
                         autofocus
                         placeholder="Contoh: dr. Eko Prasetyo"
-                        class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm 
-                               focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 
-                               outline-none transition-all bg-slate-50/50 hover:bg-white"
+                        class="w-full px-4 py-3 bg-mist border-0 rounded-lg text-sm text-ink placeholder-muted/40
+                               focus:ring-2 focus:ring-signal/30 focus:bg-white outline-none transition-all"
                     >
-                    @error('nama_lengkap')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
                 </div>
 
-                {{-- Input: Username --}}
-                <div>
-                    <label for="username" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                        Username Akun
+                {{-- Username --}}
+                <div class="space-y-1.5">
+                    <label for="username" class="block text-xs font-bold text-muted uppercase tracking-wider">
+                        Username
                     </label>
                     <input
                         type="text"
@@ -93,19 +72,15 @@
                         name="username"
                         value="{{ old('username') }}"
                         required
-                        placeholder="Gunakan huruf kecil tanpa spasi"
-                        class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm 
-                               focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 
-                               outline-none transition-all bg-slate-50/50 hover:bg-white"
+                        placeholder="Huruf kecil tanpa spasi"
+                        class="w-full px-4 py-3 bg-mist border-0 rounded-lg text-sm text-ink placeholder-muted/40
+                               focus:ring-2 focus:ring-signal/30 focus:bg-white outline-none transition-all"
                     >
-                    @error('username')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
                 </div>
 
-                {{-- Input: Password --}}
-                <div>
-                    <label for="password" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                {{-- Password --}}
+                <div class="space-y-1.5">
+                    <label for="password" class="block text-xs font-bold text-muted uppercase tracking-wider">
                         Password
                     </label>
                     <input
@@ -114,45 +89,60 @@
                         name="password"
                         required
                         placeholder="Minimal 6 karakter"
-                        class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm 
-                               focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 
-                               outline-none transition-all bg-slate-50/50 hover:bg-white"
+                        class="w-full px-4 py-3 bg-mist border-0 rounded-lg text-sm text-ink placeholder-muted/40
+                               focus:ring-2 focus:ring-signal/30 focus:bg-white outline-none transition-all"
                     >
-                    @error('password')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
                 </div>
 
-                {{-- Submit Button --}}
+                {{-- Role Selector --}}
+                <div class="space-y-1.5">
+                    <label for="role" class="block text-xs font-bold text-muted uppercase tracking-wider">
+                        Peran / Role
+                    </label>
+                    <select
+                        id="role"
+                        name="role"
+                        required
+                        class="w-full px-4 py-3 bg-mist border-0 rounded-lg text-sm text-ink
+                               focus:ring-2 focus:ring-signal/30 focus:bg-white outline-none transition-all appearance-none cursor-pointer"
+                    >
+                        <option value="" disabled {{ old('role') ? '' : 'selected' }}>— Pilih Role —</option>
+                        <option value="Staf Admin" {{ old('role') == 'Staf Admin' ? 'selected' : '' }}>Staf Admin</option>
+                        <option value="Tenaga Medis" {{ old('role') == 'Tenaga Medis' ? 'selected' : '' }}>Tenaga Medis</option>
+                        <option value="Farmasi" {{ old('role') == 'Farmasi' ? 'selected' : '' }}>Farmasi</option>
+                        <option value="Bidan" {{ old('role') == 'Bidan' ? 'selected' : '' }}>Bidan</option>
+                    </select>
+                </div>
+
+                {{-- Submit --}}
                 <button
                     type="submit"
                     id="registerButton"
-                    class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold 
-                           rounded-xl text-sm shadow-lg shadow-emerald-500/20 transition-all 
-                           transform active:scale-[0.98] hover:-translate-y-0.5
+                    class="w-full py-3.5 mt-2 bg-ink hover:bg-ink/90 text-white font-bold
+                           rounded-full text-sm transition-all transform active:scale-[0.98]
                            flex items-center justify-center gap-2"
                 >
                     <i data-lucide="user-plus" class="w-4 h-4"></i>
-                    Daftarkan Anggota Baru
+                    Daftarkan Akun
                 </button>
             </form>
 
-            {{-- ── Link ke Login ──────────────────────────────────────── --}}
-            <div class="text-center pt-2 border-t border-slate-100">
-                <p class="text-xs text-slate-500">
-                    Sudah punya kredensial? 
-                    <a href="{{ route('login') }}" class="text-blue-600 font-semibold hover:underline hover:text-blue-700 transition-colors">
+            {{-- Login Link --}}
+            <div class="text-center pt-3 border-t border-mist">
+                <p class="text-sm text-muted">
+                    Sudah punya akun?
+                    <a href="{{ route('login') }}" class="text-signal font-semibold hover:underline transition-colors">
                         Masuk Portal
                     </a>
                 </p>
             </div>
         </div>
 
-        {{-- ── Footer Credit ─────────────────────────────────────────── --}}
-        <p class="text-center text-xs text-slate-500 mt-6">
+        {{-- Footer --}}
+        <p class="text-center text-xs text-muted/60 mt-8">
             &copy; {{ date('Y') }} Medivest — UNS PSDKU Madiun
         </p>
     </div>
-    </div>
+</div>
 
 @endsection

@@ -21,9 +21,8 @@ class User extends Authenticatable
     // ─── KONFIGURASI TABEL ─────────────────────────────────────────────
 
     /**
-     * Koneksi database ke Server Pusat (Server A).
+     * Menggunakan koneksi default 'mysql'
      */
-    protected $connection = 'mysql_pusat';
 
     // ... (sisanya ke bawah biarkan sama persis seperti kodemu sebelumnya)
 

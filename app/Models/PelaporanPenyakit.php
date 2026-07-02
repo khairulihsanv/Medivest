@@ -27,10 +27,8 @@ class PelaporanPenyakit extends Model
     // ─── KONFIGURASI TABEL ─────────────────────────────────────────────
 
     /**
-     * [ARSITEKTUR TERDISTRIBUSI] Koneksi Server A — Database Pusat.
-     * Wilayah yang disimpan di sini: Manguharjo, Kartoharjo.
+     * Tabel pelaporan_penyakit menggunakan koneksi default 'mysql'.
      */
-    protected $connection = 'mysql_pusat';
     protected $table = 'pelaporan_penyakit';
     protected $primaryKey = 'id_laporan';
     protected $keyType = 'int';

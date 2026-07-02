@@ -16,9 +16,7 @@ class Obat extends Model
     use SoftDeletes;
 
     // ─── KONFIGURASI BASIS DATA TERDISTRIBUSI ───────────────────────────
-    // Mengunci model ini agar selalu terhubung ke Server Pusat (Laptop Kamu)
-    protected $connection = 'mysql_pusat'; 
-
+    // Dihapus: sekarang menggunakan koneksi default 'mysql'
     // ─── KONFIGURASI TABEL LAMA (LEGACY SYSTEM INTEGRATION) ─────────────
     protected $table = 'obat';
     protected $primaryKey = 'id_obat';

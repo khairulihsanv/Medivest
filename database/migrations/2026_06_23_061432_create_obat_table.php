@@ -22,6 +22,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::connection('mysql_pusat')->dropIfExists('obat');
+        Schema::dropIfExists('obat');
     }
 };

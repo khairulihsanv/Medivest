@@ -1,100 +1,96 @@
 {{-- 
-    Login Page — Medivest Health Logistics & Monitoring System
-
-    Form login untuk Tim Medis dengan Tailwind CSS.
-    Mengirim POST request ke /login yang ditangani oleh AuthController@login.
-    
-    Dimigrasi dari: /Medivest/login.php (native PHP)
+    Login Page — Medivest VENTRILOC Design System
+    Clean white card on #efefef Mist canvas
 --}}
 
 @extends('layouts.app')
 
-@section('title', 'Login Tim Medis')
+@section('title', 'Login')
 
 @section('content')
 
-<div class="bg-slate-900 flex items-center justify-center min-h-screen p-4 w-full">
+<div class="bg-mist flex items-center justify-center min-h-screen p-4 w-full">
 
-    {{-- ─── DECORATIVE BACKGROUND ELEMENTS ──────────────────────────── --}}
-    <div class="fixed inset-0 overflow-hidden pointer-events-none">
-        <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-600/10 rounded-full blur-3xl"></div>
-    </div>
+    {{-- Login Card --}}
+    <div class="w-full max-w-md relative z-10">
+        <div class="bg-white rounded-lg p-10 space-y-8">
 
-    {{-- ─── LOGIN CARD ──────────────────────────────────────────────── --}}
-    <div class="w-full max-w-md relative fade-in">
-        <div class="bg-white rounded-2xl shadow-2xl shadow-black/20 p-8 space-y-6 border border-slate-100">
-
-            {{-- ── Brand Header ──────────────────────────────────────── --}}
-            <div class="text-center space-y-2">
-                <div class="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center text-white font-black text-2xl mx-auto shadow-lg shadow-blue-500/30">
+            {{-- Brand Header --}}
+            <div class="text-center space-y-3">
+                <div class="w-14 h-14 bg-signal rounded-lg flex items-center justify-center text-white font-display font-black text-2xl mx-auto">
                     M
                 </div>
-                <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Portal Tim Medis</h1>
-                <p class="text-sm text-slate-500">Masuk untuk mengelola logistik obat dan pantauan wabah.</p>
+                <div>
+                    <h1 class="text-2xl font-display font-bold text-ink tracking-tight mt-4">Portal Tim Medis</h1>
+                    <p class="text-sm text-muted mt-1">Masuk untuk mengelola logistik obat & pantauan wabah.</p>
+                </div>
             </div>
 
-            {{-- ── Error Messages (dari Laravel validation) ──────────── --}}
+            {{-- Error Messages --}}
             @if ($errors->any())
-                <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-xs font-semibold text-center fade-in">
-                    ⚠️ {{ $errors->first() }}
+                <div class="bg-red-50 text-red-700 px-4 py-3 rounded-lg text-sm font-semibold text-center flex items-center justify-center gap-2">
+                    <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                    {{ $errors->first() }}
                 </div>
             @endif
 
-            {{-- ── Success Message (dari redirect register) ──────────── --}}
-            @if (session('success'))
-                <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-xl text-xs font-semibold text-center fade-in">
-                    🎉 {{ session('success') }}
-                </div>
-            @endif
+            {{-- Login Form --}}
+            <form method="POST" action="{{ url('/login') }}" class="space-y-5" id="loginForm">
+                @csrf
 
-            {{-- ── Login Form ────────────────────────────────────────── --}}
-            <form method="POST" action="{{ url('/login') }}" class="space-y-4" id="loginForm">
-                @csrf {{-- Token CSRF wajib untuk setiap form POST di Laravel --}}
-
-                {{-- Input: Username --}}
-                <div>
-                    <label for="username" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                {{-- Username --}}
+                <div class="space-y-1.5">
+                    <label for="username" class="block text-xs font-bold text-muted uppercase tracking-wider">
                         Username
                     </label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        value="{{ old('username') }}"
-                        required
-                        autofocus
-                        placeholder="Masukkan username"
-                        class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm 
-                               focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 
-                               outline-none transition-all bg-slate-50/50 hover:bg-white"
-                    >
+                    <div class="relative">
+                        <i data-lucide="user" class="w-[18px] h-[18px] absolute left-4 top-1/2 -translate-y-1/2 text-muted/40"></i>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            value="{{ old('username') }}"
+                            required
+                            autofocus
+                            placeholder="Masukkan username"
+                            class="w-full pl-11 pr-4 py-3 bg-mist border-0 rounded-lg text-sm text-ink placeholder-muted/40
+                                   focus:ring-2 focus:ring-signal/30 focus:bg-white outline-none transition-all"
+                        >
+                    </div>
                 </div>
 
-                {{-- Input: Password --}}
-                <div>
-                    <label for="password" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                {{-- Password --}}
+                <div class="space-y-1.5">
+                    <label for="password" class="block text-xs font-bold text-muted uppercase tracking-wider">
                         Password
                     </label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        required
-                        placeholder="••••••••"
-                        class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm 
-                               focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 
-                               outline-none transition-all bg-slate-50/50 hover:bg-white"
-                    >
+                    <div class="relative">
+                        <i data-lucide="lock" class="w-[18px] h-[18px] absolute left-4 top-1/2 -translate-y-1/2 text-muted/40"></i>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            required
+                            placeholder="••••••••"
+                            class="w-full pl-11 pr-4 py-3 bg-mist border-0 rounded-lg text-sm text-ink placeholder-muted/40
+                                   focus:ring-2 focus:ring-signal/30 focus:bg-white outline-none transition-all"
+                        >
+                    </div>
                 </div>
 
-                {{-- Submit Button --}}
+                {{-- Remember Me --}}
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" id="remember" name="remember"
+                           class="w-4 h-4 rounded border-muted/20 text-signal focus:ring-signal/30 bg-mist">
+                    <label for="remember" class="text-sm text-muted font-medium cursor-pointer">Ingat saya</label>
+                </div>
+
+                {{-- Submit --}}
                 <button
                     type="submit"
                     id="loginButton"
-                    class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold 
-                           rounded-xl text-sm shadow-lg shadow-blue-500/20 transition-all 
-                           transform active:scale-[0.98] hover:-translate-y-0.5 
+                    class="w-full py-3.5 mt-2 bg-signal hover:bg-signal/90 text-white font-bold
+                           rounded-full text-sm transition-all transform active:scale-[0.98]
                            flex items-center justify-center gap-2"
                 >
                     <i data-lucide="log-in" class="w-4 h-4"></i>
@@ -102,22 +98,22 @@
                 </button>
             </form>
 
-            {{-- ── Link ke Register ──────────────────────────────────── --}}
-            <div class="text-center pt-2 border-t border-slate-100">
-                <p class="text-xs text-slate-500">
-                    Belum punya akun medis? 
-                    <a href="{{ route('register') }}" class="text-blue-600 font-semibold hover:underline hover:text-blue-700 transition-colors">
+            {{-- Register Link --}}
+            <div class="text-center pt-4 border-t border-mist">
+                <p class="text-sm text-muted">
+                    Belum punya akun?
+                    <a href="{{ route('register') }}" class="text-signal font-semibold hover:underline transition-colors">
                         Daftar Akun Baru
                     </a>
                 </p>
             </div>
         </div>
 
-        {{-- ── Footer Credit ─────────────────────────────────────────── --}}
-        <p class="text-center text-xs text-slate-500 mt-6">
+        {{-- Footer --}}
+        <p class="text-center text-xs text-muted/60 mt-8">
             &copy; {{ date('Y') }} Medivest — UNS PSDKU Madiun
         </p>
     </div>
-    </div>
+</div>
 
 @endsection
