@@ -108,7 +108,7 @@
                     </div>
                     <p class="text-4xl font-display font-black text-ink tracking-tight">99.9<span class="text-xl">%</span></p>
                     <p class="text-sm font-semibold text-muted mt-2">Platform Uptime</p>
-                    <p class="text-xs text-muted/60 mt-1">Infrastruktur TiDB Cloud</p>
+                    <p class="text-xs text-muted/60 mt-1">Infrastruktur Railway</p>
                 </div>
             </div>
         </div>

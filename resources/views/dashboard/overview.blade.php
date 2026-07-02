@@ -74,8 +74,8 @@
             </span>
         </div>
         <p class="text-sm font-semibold text-muted mb-0.5">Infrastruktur</p>
-        <p class="text-xl font-display font-black text-ink tracking-tight">TiDB Cloud</p>
-        <p class="text-xs text-muted/60 mt-1">AWS ap-southeast-1</p>
+        <p class="text-xl font-display font-black text-ink tracking-tight">Railway DB</p>
+        <p class="text-xs text-muted/60 mt-1">Railway Cloud Network</p>
     </div>
 </div>
 
